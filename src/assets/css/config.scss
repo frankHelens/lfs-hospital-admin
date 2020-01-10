@@ -1,0 +1,7 @@
+$primary-color: #03a9f4;
+$info-color: #ddd;
+@mixin flex-wrap ($dir:row) {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: $dir;
+}
