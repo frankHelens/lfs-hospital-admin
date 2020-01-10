@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 18:03:27
+ * @LastEditTime : 2020-01-10 10:31:36
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description: 请求接口拦截封装
@@ -42,7 +42,7 @@ service.interceptors.response.use((response:any) => {
     if (response.data.code === 0) {
       return Promise.resolve(response.data.data)
     } else {
-      if (response.data.code === 2) {
+      if (response.data.code === 403) {
         Message({
           type: 'error',
           message: '登录超时'

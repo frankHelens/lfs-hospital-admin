@@ -1,8 +1,8 @@
 <!--
  * @Author: 黄丰瑞 <huangfengrui@hqyatu.com>
  * @Date: 2019-08-02 16:00:10
- * @LastEditors: 黄丰瑞 <huangfengrui@hqyatu.com>
- * @LastEditTime: 2019-08-16 10:04:07
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-10 11:11:29
  * @Description: 分页
  -->
 <template lang='pug'>
@@ -23,7 +23,7 @@ import { Vue, Component, Provide, Emit, Prop } from 'vue-property-decorator'
 export default class Pagination extends Vue {
   @Prop({ default: 0 }) total!: number;
   @Provide() pageSize: number = 10
-  @Provide() pageIndex: number = 10
+  @Provide() pageIndex: number = 1
 
   @Emit('handleChange')
   handleCurrentChange (number: number) {
@@ -36,6 +36,7 @@ export default class Pagination extends Vue {
   @Emit('handleChange')
   handleSizeChange (number: number) {
     this.pageSize = number
+    this.pageIndex = 0
     return {
       pageSize: this.pageSize,
       pageIndex: this.pageIndex

@@ -2,7 +2,7 @@
  * @Author: 黄丰瑞 <huangfengrui@hqyatu.com>
  * @Date: 2019-08-02 16:00:10
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 16:47:40
+ * @LastEditTime : 2020-01-10 13:59:07
  * @Description: 通用的方法
  */
 
@@ -51,9 +51,10 @@ export const setRequest = (list: any) => {
     funcName,
     url,
     afterFn,
+    concatId = false,
     notKey = false }: any) => {
-    res[funcName || url] = (data:any = {}) => request({
-      url: `/${url}`,
+    res[funcName] = (data:any = {}) => request({
+      url: concatId ? `/${url}/${data.id}` : `/${url}`,
       method,
       [method === 'get' ? 'params' : 'data']: !notKey ? {
         ...data
@@ -168,3 +169,10 @@ export const storage = {
     window.sessionStorage.clear()
   }
 }
+
+/**
+ * @description: 对象深拷贝
+ * @param {object} 原对象
+ * @return {object} 深拷贝后的对象
+ */
+export const cloneDeep = (val:object = {}) => JSON.parse(JSON.stringify(val))

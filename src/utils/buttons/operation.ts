@@ -1,11 +1,12 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 18:17:45
+ * @LastEditTime : 2020-01-10 09:59:57
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
  */
 import request from '@/utils/api'
+import { cloneDeep } from '../common'
 
 export const operationUpdate = {
   label: '编辑',
@@ -30,10 +31,9 @@ export const operationDelete = {
 }
 
 export function operationEventUpdate ({ table, data }: any) {
-  console.log('data', data)
   const labelName = table.labelName ? `【${data[table.labelName]}】` : ''
   table.dialogLabel = `编辑${table.label}${labelName}`
-  table.dialogFormValues = data
+  table.dialogFormValues = cloneDeep(data)
   table.dialogFormList = table.updateList
   table.dialogButtonList = table.updateButtonList
   table.dialogVisible = true

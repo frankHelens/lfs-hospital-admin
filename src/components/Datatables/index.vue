@@ -6,6 +6,9 @@
         v-if="toolbarList && toolbarList.length"
         :buttonList="toolbarList")
       .search-wrapper
+        FilterBox(
+          v-if="isFilter"
+          ref="filterBox")
         SmartForm(
           v-if="hasRelation"
           :inline="true"
@@ -25,11 +28,13 @@
         :total="total"
         @handleChange="onPaginationChange")
   el-dialog(
+    :width="dialogWidth"
     :close-on-click-modal="false"
     :title="dialogLabel"
     :visible.sync="dialogVisible")
     SmartForm(
-      v-if="hasRelation"
+      v-if="dialogVisible && hasRelation"
+      ref="smartForm"
       :values="dialogFormValues"
       :formList="createList"
       :columns="columnsList"
@@ -43,6 +48,8 @@ import ButtonList from '@/components/ButtonList/index.vue'
 import Datatable from './Datatable.vue'
 import Pagination from './Pagination.vue'
 import SmartForm from '@/components/SmartForm/index.vue'
+import FilterBox from '@/components/FilterBox.vue'
+import dayjs from 'dayjs'
 import request from '@/utils/api'
 
 interface DatatablesProps {
@@ -60,6 +67,7 @@ interface DatatablesProps {
   operation?: object[]
   createFormValues?: object
   updateFormValues?: object
+  isFilter?: boolean
 }
 
 @Component({
@@ -67,18 +75,23 @@ interface DatatablesProps {
     ButtonList,
     Datatable,
     SmartForm,
-    Pagination
+    Pagination,
+    FilterBox
   }
 })
 
 export default class Datatables extends tsc<DatatablesProps> {
-// export default class Datatables extends Vue {
+  public $refs!: {
+    filterBox: FilterBox
+  }
+  // export default class Datatables extends Vue {
   @Prop({ default: '' }) label!: string
   @Prop({ default: '' }) labelName!: string
   @Prop({ default: '' }) resource!: string
   @Prop({ default: () => ({}), required: true }) columns!: object
   @Prop({ default: () => [] }) tableData!: object[]
   @Prop({ default: 100 }) operationWidth!: number
+  @Prop({ default: false }) isFilter!: boolean
   @Prop({ default: () => [] }) tableList!: string[]
   @Prop({ default: () => [] }) filterList!: string[]
   @Prop({ default: () => [] }) createList!: string[]
@@ -95,25 +108,30 @@ export default class Datatables extends tsc<DatatablesProps> {
   @Provide() total: number = 0
   @Provide() loading: boolean = false
   @Provide() columnsList: any = {}
-  @Provide() filterBy: string = ''
+  @Provide() filterValues: object = {}
   @Provide() filterButtonList: object[] = [{
     label: '搜索',
     func: ({ data }: any) => {
       this.onFilterChange(data)
     }
   }]
+  @Provide() dialogWidth: string = '40%'
   @Provide() dialogVisible: boolean = false
   @Provide() dialogLabel: string = ''
   @Provide() dialogFormValues: object = {}
   @Provide() dialogButtonList: object[] = []
   @Provide() createButtonList: object[] = [{
     label: '提交',
+    type: 'primary',
+    validate: true,
     func: (props: object) => {
       this.onCreateSubmit(props)
     }
   }]
   @Provide() updateButtonList: object[] = [{
     label: '提交',
+    type: 'primary',
+    validate: true,
     func: (props: object) => {
       this.onUpdateSubmit(props)
     }
@@ -124,7 +142,7 @@ export default class Datatables extends tsc<DatatablesProps> {
   }
 
   get tableClientHeight (): number {
-    return document.body.clientHeight - 354
+    return document.body.clientHeight - 308
   }
   get toolbarList () {
     return this.toolbar.reduce((res: any, toolbar: any) => {
@@ -163,12 +181,14 @@ export default class Datatables extends tsc<DatatablesProps> {
   }
   async getData () {
     if (this.resource) {
+      console.log('this.filterValues', this.filterValues)
       this.loading = true
       const data = await request({
         url: `${this.resource}/list`,
         params: {
           pageSize: this.pageSize,
-          pageNum: this.pageIndex
+          pageNum: this.pageIndex,
+          ...this.filterValues
         }
       })
       this.currentTableData = data.records
@@ -198,23 +218,35 @@ export default class Datatables extends tsc<DatatablesProps> {
     }, {})
     this.columnsList = columnsList
   }
-  onPaginationChange ({ pageIndex, pageSize }:any) {
+  onPaginationChange ({ pageIndex, pageSize, ...arg }:any) {
     this.pageSize = pageSize
     this.pageIndex = pageIndex
     this.getData()
   }
   onFilterChange (data: any) {
-    this.filterBy = Object.keys(data).reduce((res: any, item:any) => {
-      if (data[item]) {
-        res.push({
-          name: item,
-          type: this.columnsList[item].filterType || 'eq',
-          value: data[item]
-        })
-      }
-      return res
-    }, []).map(({ name, type, value }: any) => `${name}|${type}|${value}`).join(';')
-    console.log(this.filterBy)
+    const { day, name, dateRange } = this.$refs.filterBox
+    const [startTime, endTime] = dateRange
+    const filterBoxValues = {
+      name,
+      day,
+      startTime: dayjs(startTime).format('YYYY-MM-DD'),
+      endTime: dayjs(endTime).format('YYYY-MM-DD')
+    }
+    // this.filterValues = Object.keys(data).reduce((res: any, item:any) => {
+    //   if (data[item]) {
+    //     res.push({
+    //       name: item,
+    //       type: this.columnsList[item].filterType || 'eq',
+    //       value: data[item]
+    //     })
+    //   }
+    //   return res
+    // }, []).map(({ name, type, value }: any) => `${name}|${type}|${value}`).join(';')
+    console.log('this.filterValues', data)
+    this.filterValues = {
+      ...filterBoxValues,
+      ...data
+    }
     this.getData()
   }
   onCreateSubmit ({ data, button }: any) {

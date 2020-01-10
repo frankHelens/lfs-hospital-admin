@@ -1,3 +1,10 @@
+<!--
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-10 09:36:50
+ * @Author: huangfengrui
+ * @Date: 2020-01-09 11:06:30
+ * @Description:
+ -->
 <template lang='pug'>
 el-form(
   ref="form"
@@ -69,7 +76,11 @@ export default class SmartForm extends Vue {
     const columns: any = this.columns
     return Object.keys(columns).reduce((res:any, key:any) => {
       if (columns[key].form) {
-        res[key] = columns[key].form.rules
+        const rules = columns[key].form.rules || {}
+        res[key] = rules.required ? {
+          message: '此选项必填',
+          ...rules
+        } : rules
       }
       return res
     }, {})

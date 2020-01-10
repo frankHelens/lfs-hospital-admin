@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 15:52:33
+ * @LastEditTime : 2020-01-10 17:11:41
  * @Author: huangfengrui
  * @Date: 2020-01-09 15:51:42
  * @Description: password
@@ -25,9 +25,6 @@ export default class Password extends Vue {
   @Prop({ default: '' }) placeholder!: string
   @Prop({ default: () => [] }) options!: object[]
 
-  updated () {
-    console.log(this.options)
-  }
   get currentValue () {
     return this.value
   }

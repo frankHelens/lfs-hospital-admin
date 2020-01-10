@@ -1,13 +1,12 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 17:48:35
+ * @LastEditTime : 2020-01-10 14:41:54
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
  -->
 <template lang='pug'>
   Datatables(
-    :isFilter="true"
     :resource="resource"
     :columns="columns"
     :tableList="tableList"
@@ -22,24 +21,25 @@ import { Vue, Component, Provide } from 'vue-property-decorator'
 import { toolbarCreate } from '@/utils/buttons/toolbar'
 import { operationUpdate, operationDelete } from '@/utils/buttons/operation'
 import Datatables from '@/components/Datatables/index.vue'
+import dayjs from 'dayjs'
 
 @Component({
   components: {
     Datatables
   }
 })
-export default class Hospital extends Vue {
-  @Provide() title: string = '医院管理'
-  @Provide() resource: string = 'hospital'
-  @Provide() tableList: string[] = ['name', 'phone', 'address']
-  @Provide() createList: string[] = ['name', 'phone', 'address']
-  @Provide() updateList: string[] = ['name', 'phone', 'address']
+export default class Classify extends Vue {
+  @Provide() title: string = '分类管理'
+  @Provide() resource: string = 'category'
+  @Provide() tableList: string[] = ['name', 'createTime']
+  @Provide() createList: string[] = ['name']
+  @Provide() updateList: string[] = ['name']
   @Provide() filterList: string[] = []
   @Provide() toolbarList: Object[] = [toolbarCreate]
   @Provide() operationList: Object[] = [operationUpdate, operationDelete]
   @Provide() columns: object = {
     name: {
-      label: '医院名称',
+      label: '类别',
       form: {
         type: 'input',
         rules: {
@@ -47,17 +47,11 @@ export default class Hospital extends Vue {
         }
       }
     },
-    address: {
-      label: '医院地址',
-      form: {
-        type: 'input',
-        rules: {
-          required: true
-        }
-      }
-    },
-    phone: {
-      label: '医院电话',
+    createTime: {
+      label: '添加时间',
+      formatter: (row:any, columns:any, val: any) => {
+        return dayjs(val).format('YYYY-MM-DD HH:mm')
+      },
       form: {
         type: 'input',
         rules: {

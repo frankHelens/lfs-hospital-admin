@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 17:13:19
+ * @LastEditTime : 2020-01-10 14:12:44
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -21,7 +21,7 @@ declare global {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $informationApi: any,
+    $commonApi: any,
     $systemApi: any
   }
 }

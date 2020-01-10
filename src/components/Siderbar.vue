@@ -34,49 +34,13 @@
 
 <script lang="ts">
 import { Vue, Provide, Component } from 'vue-property-decorator'
+import menus from '@/utils/menu'
 
 @Component({})
 export default class Siderbar extends Vue {
   @Provide() collapse: boolean = false;
   @Provide() activeIndex: string = '0';
-  @Provide() menuList: object[] = [
-    {
-      icon: 'menu',
-      name: 'hospital',
-      label: '医院管理',
-      url: '/hospital'
-    },
-    {
-      icon: 'menu',
-      name: 'information',
-      label: '资讯管理',
-      url: '/information'
-    },
-    {
-      icon: 'menu',
-      name: 'dashboard',
-      label: '首页',
-      url: '/dashboard'
-    },
-    {
-      icon: 'menu',
-      name: 'formPage',
-      label: '表单',
-      url: '/formPage'
-    },
-    {
-      icon: 'menu',
-      name: 'datatablePage',
-      label: '表格',
-      url: '/datatablePage'
-    },
-    {
-      icon: 'menu',
-      name: 'buttonListPage',
-      label: '按钮组',
-      url: '/buttonListPage'
-    }
-  ];
+  @Provide() menuList: object[] = menus
   created (): void {
     // 通过 Event Bus 进行组件间通信，来折叠侧边栏
     this.$bus.$on('collapse', (msg: boolean) => {
@@ -112,12 +76,19 @@ export default class Siderbar extends Vue {
 .sidebar-el-menu:not(.el-menu--collapse) {
   width: 200px;
 }
-.el-menu-item:hover {
-  color: #fff !important;
+.el-menu-item {
+  height: 42px;
+  line-height: 42px;
+  &:hover {
+    color: #fff !important;
+  }
+  &.is-active{
+    background: #1890ff !important;
+    color: #fff !important;
+  }
 }
-.el-menu-item.is-active{
-  background: #1890ff !important;
-  color: #fff !important;
+.el-submenu .el-menu-item {
+  @extend .el-menu-item
 }
 
 .sidebar > ul {

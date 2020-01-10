@@ -1,3 +1,10 @@
+<!--
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-10 17:10:51
+ * @Author: huangfengrui
+ * @Date: 2020-01-09 11:06:30
+ * @Description:
+ -->
 <template lang='pug'>
 el-select(
   v-model="currentValue"
@@ -5,7 +12,7 @@ el-select(
   :readonly="readonly"
   :placeholder="placeholder")
   el-option(
-    v-for="item in options"
+    v-for="item in currentOptions"
     :key="item.value"
     :label="item.label"
     :value="item.value")
@@ -22,9 +29,10 @@ export default class SmartInput extends Vue {
   @Prop({ default: '' }) placeholder!: string
   @Prop({ default: () => [] }) options!: object[]
 
-  updated () {
-    console.log(this.options)
+  get currentOptions () {
+    return this.options
   }
+
   get currentValue () {
     return this.value
   }

@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 15:51:34
+ * @LastEditTime : 2020-01-10 17:10:29
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description: 表单封装
@@ -9,7 +9,7 @@
 components(
   v-model="currentValue"
   v-bind="column.form"
-  :options="column.options"
+  :options="column.form.options"
   :is="getComponent(column.form.type)")
 </template>
 

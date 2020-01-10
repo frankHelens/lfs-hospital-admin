@@ -1,4 +1,11 @@
-// import { cloneDeep } from 'lodash'
+/*
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-10 09:33:38
+ * @Author: huangfengrui
+ * @Date: 2020-01-09 11:06:30
+ * @Description:
+ */
+import { cloneDeep } from '@/utils/common'
 
 export const toolbarCreate = {
   label: '新增',
@@ -38,8 +45,8 @@ export const toolbarRefresh = {
 
 export function toolbarEventCreate ({ table }: any) {
   table.dialogLabel = '新增' + table.label
-  // table.dialogFormValues = cloneDeep(table.createFormValues)
-  table.dialogFormValues = table.createFormValues
+  table.dialogFormValues = cloneDeep(table.createFormValues)
+  // table.dialogFormValues = table.createFormValues
   table.dialogFormList = table.createList
   table.dialogButtonList = table.createButtonList
   table.dialogVisible = true

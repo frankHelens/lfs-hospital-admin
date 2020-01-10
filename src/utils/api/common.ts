@@ -1,4 +1,11 @@
 /*
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-10 14:00:46
+ * @Author: huangfengrui
+ * @Date: 2020-01-09 11:06:30
+ * @Description:
+ */
+/*
 * url: 接口地址
 * funcName: 调用接口方法名(不填默认拿接口地址作为方法名)
 * remark: 备注
@@ -8,8 +15,10 @@
 */
 
 export default [{
-  url: 'dataManage',
-  funcName: 'getDataManage',
+  url: 'reserve/update',
+  method: 'post',
+  concatId: true,
+  funcName: 'therapy',
   remark: '数据管理接口',
   afterFn (data: any) {
     return data

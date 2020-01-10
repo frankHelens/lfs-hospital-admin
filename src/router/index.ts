@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 17:58:00
+ * @LastEditTime : 2020-01-10 16:25:39
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -56,6 +56,14 @@ export default new Router({
           path: '/hospital',
           name: 'hospital',
           component: () => import(/* webpackChunkName: "hospital" */ '@/views/Hospital.vue')
+        }, {
+          path: '/reserve',
+          name: 'reserve',
+          component: () => import(/* webpackChunkName: "reserve" */ '@/views/Reserve.vue')
+        }, {
+          path: '/banner',
+          name: 'banner',
+          component: () => import(/* webpackChunkName: "banner" */ '@/views/Banner.vue')
         }
       ]
     },
