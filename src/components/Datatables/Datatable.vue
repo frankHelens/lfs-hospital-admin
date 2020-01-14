@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 16:49:31
+ * @LastEditTime : 2020-01-14 15:18:46
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description: Datatable
@@ -26,7 +26,8 @@ el-table.table(
     :fixed="columns[key].fixed"
     :align="columns[key].align"
     :min-width="columns[key].width"
-    :formatter="columns[key].formatter")
+    :formatter="columns[key].formatter"
+    :show-overflow-tooltip="true")
   el-table-column(
     v-if="Object.keys(columns).length && hasOperation"
     :label="operationOption.label"

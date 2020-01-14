@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 14:41:54
+ * @LastEditTime : 2020-01-14 17:32:33
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -13,7 +13,8 @@
     :toolbar="toolbarList"
     :filterList="filterList"
     :createList="createList"
-    :operation="operationList")
+    :operation="operationList"
+    :operationWidth="64")
 </template>
 
 <script lang='ts'>
@@ -35,8 +36,8 @@ export default class Classify extends Vue {
   @Provide() createList: string[] = ['name']
   @Provide() updateList: string[] = ['name']
   @Provide() filterList: string[] = []
-  @Provide() toolbarList: Object[] = [toolbarCreate]
-  @Provide() operationList: Object[] = [operationUpdate, operationDelete]
+  @Provide() toolbarList: Object[] = []
+  @Provide() operationList: Object[] = [operationUpdate]
   @Provide() columns: object = {
     name: {
       label: '类别',

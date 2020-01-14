@@ -1,12 +1,12 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 09:36:50
+ * @LastEditTime : 2020-01-14 14:54:37
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
  -->
 <template lang='pug'>
-el-form(
+el-form.smart-form(
   ref="form"
   :model="formValues"
   :label-position="labelPosition"
@@ -42,8 +42,8 @@ export default class SmartForm extends Vue {
   @Prop({ default: () => [] }) formList!: string[]
   @Prop({ default: () => ({}) }) columns!: object
   @Prop({ default: () => ({}) }) values!: object
-  @Prop({ default: '80' }) labelWidth!: string
-  @Prop({ default: 'left' }) labelPosition!: string
+  @Prop({ default: '80px' }) labelWidth!: string
+  @Prop({ default: 'right' }) labelPosition!: string
   @Prop({ default: 'small' }) formSize!: string
   @Prop({ default: () => [] }) buttonList!: object[]
   @Prop({ default: false }) inline!: boolean

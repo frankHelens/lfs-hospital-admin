@@ -109,12 +109,13 @@ export default class Datatables extends tsc<DatatablesProps> {
   @Provide() loading: boolean = false
   @Provide() columnsList: any = {}
   @Provide() filterValues: object = {}
-  @Provide() filterButtonList: object[] = [{
+  @Provide() filterButtonList: object[] = this.isFilter || this.filterList.length ? [{
     label: '搜索',
+    type: 'primary',
     func: ({ data }: any) => {
-      this.onFilterChange(data)
+      this.onChangeFilter(data)
     }
-  }]
+  }] : []
   @Provide() dialogWidth: string = '40%'
   @Provide() dialogVisible: boolean = false
   @Provide() dialogLabel: string = ''
@@ -136,7 +137,7 @@ export default class Datatables extends tsc<DatatablesProps> {
       this.onUpdateSubmit(props)
     }
   }]
-  created ():void {
+  created () {
     this.getRelation()
     this.getData()
   }
@@ -169,19 +170,34 @@ export default class Datatables extends tsc<DatatablesProps> {
     }))
   }
   async getRelation () {
+    console.log(this.isFilter)
     const relation = this.getRelationList(this.columns)
-    const data = await request({
-      url: 'relation',
-      params: {
-        relation
-      }
-    })
-    this.setRelationList(this.columns, data)
-    this.hasRelation = true
+    if (relation.length) {
+      const relationRequestList = relation.map((name) => {
+        return request({
+          url: `${name}/findList`
+        }).then((data: object[]) => ({
+          name,
+          data
+        }))
+      })
+      const res = await Promise.all(relationRequestList)
+      const resData = res.reduce((res, item) => {
+        res[item.name] = item.data.map((resItem:any) => ({
+          value: String(resItem.id),
+          label: resItem.name
+        }))
+        return res
+      }, {})
+      this.setRelationList(this.columns, resData)
+      this.hasRelation = true
+    } else {
+      this.setRelationList(this.columns, {})
+      this.hasRelation = true
+    }
   }
   async getData () {
     if (this.resource) {
-      console.log('this.filterValues', this.filterValues)
       this.loading = true
       const data = await request({
         url: `${this.resource}/list`,
@@ -198,21 +214,21 @@ export default class Datatables extends tsc<DatatablesProps> {
       this.currentTableData = this.tableData
     }
   }
-  getRelationList (columns: any): string {
+  getRelationList (columns: any) {
     const columnsList = Object.keys(columns).reduce((res: string[], item: string) => {
       if (columns[item].relation) {
         res.push(columns[item].relation)
       }
       return res
     }, [])
-    return columnsList.join(',')
+    return columnsList
   }
   setRelationList (columns: any, relationData: any): void {
     const columnsList = Object.keys(columns).reduce((res: any, item: string) => {
       const relationKey = columns[item].relation
       res[item] = columns[item]
       if (relationKey) {
-        res[item]['options'] = relationData[relationKey]
+        res[item]['form']['options'] = relationData[relationKey]
       }
       return res
     }, {})
@@ -223,29 +239,18 @@ export default class Datatables extends tsc<DatatablesProps> {
     this.pageIndex = pageIndex
     this.getData()
   }
-  onFilterChange (data: any) {
-    const { day, name, dateRange } = this.$refs.filterBox
-    const [startTime, endTime] = dateRange
-    const filterBoxValues = {
+  onChangeFilter (customData: any) {
+    const { day = '', name = '', dateRange = [] } = this.isFilter ? this.$refs.filterBox : {}
+    const [startTime = '', endTime = ''] = dateRange || []
+    const filterData = this.isFilter ? {
       name,
       day,
-      startTime: dayjs(startTime).format('YYYY-MM-DD'),
-      endTime: dayjs(endTime).format('YYYY-MM-DD')
-    }
-    // this.filterValues = Object.keys(data).reduce((res: any, item:any) => {
-    //   if (data[item]) {
-    //     res.push({
-    //       name: item,
-    //       type: this.columnsList[item].filterType || 'eq',
-    //       value: data[item]
-    //     })
-    //   }
-    //   return res
-    // }, []).map(({ name, type, value }: any) => `${name}|${type}|${value}`).join(';')
-    console.log('this.filterValues', data)
+      startTime: startTime ? dayjs(startTime).format('YYYY-MM-DD') : '',
+      endTime: endTime ? dayjs(endTime).format('YYYY-MM-DD') : ''
+    } : {}
     this.filterValues = {
-      ...filterBoxValues,
-      ...data
+      ...filterData,
+      ...customData
     }
     this.getData()
   }

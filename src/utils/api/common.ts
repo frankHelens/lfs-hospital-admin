@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 14:00:46
+ * @LastEditTime : 2020-01-14 15:37:54
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -19,23 +19,32 @@ export default [{
   method: 'post',
   concatId: true,
   funcName: 'therapy',
-  remark: '数据管理接口',
+  remark: '就诊',
   afterFn (data: any) {
     return data
   }
 }, {
-  url: 'dataGraphical',
-  funcName: 'getDataGraphical',
-  remark: '图形管理接口',
-  afterFn (data: any) {
-    // 添加legendData
-    const resultData = data.data.map((item: any) => {
-      item['legendData'] = item.nameitem.map((subItem: any) => subItem.name)
-      item.nameitem.map((subItem: any) => {
-        subItem['percentage'] = (subItem.value / item.total).toFixed(2)
-      })
-      return item
-    })
-    return resultData
-  }
+  url: 'banner/active',
+  method: 'post',
+  concatId: true,
+  funcName: 'publishBanner',
+  remark: '发布banner'
+}, {
+  url: 'banner/cancel',
+  method: 'post',
+  concatId: true,
+  funcName: 'cancelBanner',
+  remark: '发布banner'
+}, {
+  url: 'article/active',
+  method: 'post',
+  concatId: true,
+  funcName: 'publishArticle',
+  remark: '发布资讯'
+}, {
+  url: 'article/cancel',
+  method: 'post',
+  concatId: true,
+  funcName: 'cancelArticle',
+  remark: '发布资讯'
 }]

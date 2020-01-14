@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 17:11:41
+ * @LastEditTime : 2020-01-13 15:43:32
  * @Author: huangfengrui
  * @Date: 2020-01-09 15:51:42
  * @Description: password
@@ -18,7 +18,7 @@ el-input(
 import { Vue, Component, Provide, Prop } from 'vue-property-decorator'
 
 @Component
-export default class Password extends Vue {
+export default class SmartPassword extends Vue {
   @Prop({ default: '' }) value!: string | number
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) readonly!: boolean

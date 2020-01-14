@@ -1,12 +1,13 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 16:53:52
+ * @LastEditTime : 2020-01-13 15:34:02
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
  -->
 <template lang='pug'>
   Datatables(
+    :isFilter="true"
     :resource="resource"
     :columns="columns"
     :tableList="tableList"
@@ -37,6 +38,12 @@ export default class Reserve extends Vue {
     label: '就诊',
     type: 'primary',
     icon: 'eye',
+    showFunc: (button:object, row:any) => {
+      const { funcProps } = row
+      const { data } = funcProps
+      const { state } = data
+      return state === 0
+    },
     func: ({ button, data, table }: any) => {
       button.loading = true
       this.$commonApi.therapy(data).then(() => {
@@ -72,9 +79,9 @@ export default class Reserve extends Vue {
     },
     hospitalId: {
       label: '医院名称',
+      relation: 'hospital',
       form: {
-        type: 'select',
-        options: []
+        type: 'select'
       }
     },
     hospitalPhone: {

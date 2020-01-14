@@ -1,45 +1,51 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 16:27:41
+ * @LastEditTime : 2020-01-14 18:08:42
  * @Author: huangfengrui
  * @Date: 2020-01-10 16:26:05
  * @Description: 菜单
  */
 export default [
   {
-    icon: 'menu',
+    icon: 'document',
     name: 'banner',
     label: '广告管理',
     url: '/banner'
   },
   {
-    icon: 'menu',
+    icon: 's-home',
     name: 'hospital',
     label: '医院管理',
     url: '/hospital'
   },
   {
-    icon: 'menu',
+    icon: 'phone',
     name: 'reserve',
     label: '预约管理',
     url: '/reserve'
   },
   {
-    icon: 'menu',
+    icon: 's-order',
     name: 'information',
     label: '资讯管理',
     url: '/information',
     submenu: [{
-      icon: 'menu',
+      icon: 's-order',
       name: 'list',
       label: '资讯',
       url: '/information/list'
     }, {
-      icon: 'menu',
+      icon: 'notebook-2',
       name: 'classify',
       label: '分类管理',
       url: '/information/classify'
     }]
+  },
+  {
+    icon: 'user',
+    name: 'user',
+    label: '员工管理',
+    url: '/user'
   }
   // {
   //   icon: 'menu',

@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 18:04:25
+ * @LastEditTime : 2020-01-14 17:50:48
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -60,8 +60,9 @@ export default class Login extends Vue {
     label: '登录',
     validate: true,
     func: async ({ button, data }: any) => {
-      const token = await this.$systemApi.login(data)
+      const { token, name } = await this.$systemApi.login(data)
       storage.set('token', token || '')
+      storage.set('name', name || '')
       this.$message({
         type: 'success',
         message: '登录成功'

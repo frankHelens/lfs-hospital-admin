@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-09 17:52:39
+ * @LastEditTime : 2020-01-14 11:23:06
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -23,6 +23,7 @@ declare module '*./FormItems'
 declare module 'element-ui'
 declare module 'vue-bus-ts'
 declare module 'vue-router'
+declare module 'vue-quill-editor'
 // declare const require: any
 // declare const process: any
 declare var NodeJS: any

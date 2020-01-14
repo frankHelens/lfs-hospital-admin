@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 17:10:29
+ * @LastEditTime : 2020-01-14 15:12:33
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description: 表单封装
@@ -9,6 +9,7 @@
 components(
   v-model="currentValue"
   v-bind="column.form"
+  :type="column.form.formType"
   :options="column.form.options"
   :is="getComponent(column.form.type)")
 </template>
@@ -24,9 +25,12 @@ export default class FormItem extends Vue {
   @Provide() componentEnum: any = {
     input: require('element-ui').Input,
     select: require('./SmartSelect').default,
-    password: require('./Password').default,
+    password: require('./SmartPassword').default,
+    upload: require('./SmartUpload').default,
+    switch: require('./SmartSwitch').default,
     number: require('element-ui').InputNumber,
-    switch: require('element-ui').Switch
+    radio: require('element-ui').Radio,
+    richtext: require('./SmartRichtext').default
   }
 
   get currentValue () {

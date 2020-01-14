@@ -1,3 +1,10 @@
+<!--
+ * @LastEditors  : huangfengrui
+ * @LastEditTime : 2020-01-14 18:06:47
+ * @Author: huangfengrui
+ * @Date: 2020-01-09 11:06:30
+ * @Description:
+ -->
 <template lang="pug">
 //- el-aside(
 //-   :width="collapse ? '70px' : '200px'" )
@@ -15,20 +22,20 @@
         v-if="menu.submenu"
         :index="`${i}`")
         template(slot="title")
-          i.el-icon-menu
+          i(:class="`el-icon-${menu.icon}`")
           span(slot="title") {{menu.label}}
         el-menu-item(
           v-for="(item, j) in menu.submenu"
           :key="j"
           :index="`${i}-${j}`"
           @click="handleClickMenu(item)")
-          i.el-icon-menu
+          i(:class="`el-icon-${item.icon}`")
           span(slot="title") {{item.label}}
       el-menu-item(
         v-else
         :index="`1-${i}`"
         @click="handleClickMenu(menu)")
-        i.el-icon-menu
+        i(:class="`el-icon-${menu.icon}`")
         span(slot="title") {{menu.label}}
 </template>
 

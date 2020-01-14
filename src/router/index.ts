@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 16:25:39
+ * @LastEditTime : 2020-01-13 14:01:11
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -64,6 +64,10 @@ export default new Router({
           path: '/banner',
           name: 'banner',
           component: () => import(/* webpackChunkName: "banner" */ '@/views/Banner.vue')
+        }, {
+          path: '/user',
+          name: 'user',
+          component: () => import(/* webpackChunkName: "user" */ '@/views/User.vue')
         }
       ]
     },

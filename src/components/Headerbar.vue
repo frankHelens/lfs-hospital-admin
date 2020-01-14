@@ -26,7 +26,7 @@ import { storage } from '@/utils/common'
 @Component
 export default class Headerbar extends Vue {
   @Provide() collapse: boolean = false
-  @Provide() name: string = '管理员'
+  @Provide() name: string = storage.get('name')
 
   handleCollapse ():void {
     this.collapse = !this.collapse

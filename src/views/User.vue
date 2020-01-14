@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-13 15:21:46
+ * @LastEditTime : 2020-01-14 17:58:48
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -9,18 +9,17 @@
   Datatables(
     :resource="resource"
     :columns="columns"
-    :tableList="tableList"
-    :toolbar="toolbarList"
-    :filterList="filterList"
     :createList="createList"
+    :toolbar="toolbarList"
+    :tableList="tableList"
     :operation="operationList")
 </template>
 
 <script lang='ts'>
 import { Vue, Component, Provide } from 'vue-property-decorator'
-import { toolbarCreate } from '@/utils/buttons/toolbar'
-import { operationUpdate, operationDelete } from '@/utils/buttons/operation'
 import Datatables from '@/components/Datatables/index.vue'
+import { toolbarCreate } from '@/utils/buttons/toolbar'
+import { operationDelete } from '../utils/buttons/operation'
 
 @Component({
   components: {
@@ -28,17 +27,16 @@ import Datatables from '@/components/Datatables/index.vue'
   }
 })
 export default class Hospital extends Vue {
-  @Provide() title: string = '医院管理'
-  @Provide() resource: string = 'hospital'
-  @Provide() tableList: string[] = ['name', 'phone', 'address']
-  @Provide() createList: string[] = ['name', 'phone', 'address']
-  @Provide() updateList: string[] = ['name', 'phone', 'address']
-  @Provide() filterList: string[] = []
-  @Provide() toolbarList: Object[] = [toolbarCreate]
-  @Provide() operationList: Object[] = [operationUpdate, operationDelete]
+  @Provide() title: string = '员工管理'
+  @Provide() resource: string = 'user'
+  @Provide() tableList: string[] = ['name', 'phone', 'username']
+  @Provide() createList: string[] = ['username', 'password', 'name', 'phone']
+  @Provide() toolbarList: object[] = [toolbarCreate]
+  @Provide() operationList: object[] = [operationDelete]
+
   @Provide() columns: object = {
     name: {
-      label: '医院名称',
+      label: '员工名称',
       form: {
         type: 'input',
         rules: {
@@ -46,8 +44,8 @@ export default class Hospital extends Vue {
         }
       }
     },
-    address: {
-      label: '医院地址',
+    username: {
+      label: '账号名称',
       form: {
         type: 'input',
         rules: {
@@ -56,9 +54,18 @@ export default class Hospital extends Vue {
       }
     },
     phone: {
-      label: '医院电话',
+      label: '电话',
       form: {
         type: 'input',
+        rules: {
+          required: true
+        }
+      }
+    },
+    password: {
+      label: '密码',
+      form: {
+        type: 'password',
         rules: {
           required: true
         }
