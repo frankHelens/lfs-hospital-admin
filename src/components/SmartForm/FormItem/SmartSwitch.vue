@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 15:13:20
+ * @LastEditTime : 2020-01-14 18:28:43
  * @Author: huangfengrui
  * @Date: 2020-01-09 15:51:42
  * @Description: password
@@ -23,7 +23,8 @@ export default class SmartSwitch extends Vue {
   @Prop({ default: () => [] }) options!: object[]
 
   get currentValue () {
-    return !!this.value
+    const value:any = !!this.value
+    return value
   }
   set currentValue (val: string | number) {
     this.$emit('input', val)
