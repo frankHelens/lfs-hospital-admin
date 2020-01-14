@@ -1,0 +1,15 @@
+image: node:latest
+
+stages: # 要执行的步骤
+    - build  # 构建
+
+build: # 构建 job
+    stage: build
+    only:
+        - test # 当submit到test分支才触发此build命令
+    tags:
+        - test # 由shell执行, tag 名是 test
+    script:
+        - npm install
+        - npm run build
+        - rsync -a /home/gitlab-runner/builds/6d62e4fe/0/ebuyhouse-cg/lfs-hospital-admin/dist/ /html/lfs-hospital-admin/ --delete
