@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 17:50:48
+ * @LastEditTime : 2020-01-15 16:00:36
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -8,7 +8,7 @@
 <template lang="pug">
 .login-wrapper
   .login-box
-    h1 类风湿互助系统
+    h1 医院后台管理系统
     SmartForm(
       :columns="columns"
       :formList="formList"

@@ -3,7 +3,9 @@
   .header
     a.logo.horizontal-collapse-transition(
       :class="{'collapse': collapse}"
-      href="/") 类风湿互助
+      href="/")
+      img(v-if="collapse" :src="logo")
+      span(v-else) 医院后台管理系统
     .collapse-btn(@click="handleCollapse")
       i.iconfont.icon-category
     .header-right
@@ -15,18 +17,19 @@
           img(src="https://lfshz.oss-cn-shenzhen.aliyuncs.com/lfshz_images/201911011541553c53.png")
           el-dropdown-menu(
             slot="dropdown")
-            el-dropdown-item(command="changePassword") 修改密码
             el-dropdown-item(command="logout") 退出登录
 </template>
 
 <script lang="ts">
 import { Vue, Component, Provide, Prop } from 'vue-property-decorator'
 import { storage } from '@/utils/common'
+import logo from '@/assets/img/logo.svg'
 
 @Component
 export default class Headerbar extends Vue {
   @Provide() collapse: boolean = false
   @Provide() name: string = storage.get('name')
+  @Provide() logo: string = logo
 
   handleCollapse ():void {
     this.collapse = !this.collapse
@@ -61,10 +64,16 @@ export default class Headerbar extends Vue {
     text-align: center;
     color: #fff;
     float: left;
+    height: 60px;
     line-height: 60px;
     background: rgb(0, 21, 41);
     &.collapse {
       width: 64px;
+    }
+    img {
+      width: 30px;
+      height: 30px;
+      margin-top: 15px;
     }
   }
 }

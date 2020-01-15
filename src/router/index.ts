@@ -1,6 +1,6 @@
 /*
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-13 14:01:11
+ * @LastEditTime : 2020-01-15 16:26:52
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -30,29 +30,30 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      redirect: '/banner',
       children: [
         ...routes,
         {
-          path: 'dashboard',
-          name: 'dashboard',
-          component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
-        }, {
-          path: 'formPage',
-          name: 'formPage',
-          component: () => import(/* webpackChunkName: "page" */ '@/views/FormPage.vue')
-        }, {
-          path: 'datatablePage',
-          name: 'datatablePage',
-          component: () => import(/* webpackChunkName: "page" */ '@/views/DatatablePage.vue')
-        }, {
-          path: 'buttonListPage',
-          name: 'buttonListPage',
-          component: () => import(/* webpackChunkName: "page" */ '@/views/ButtonListPage.vue')
-        }, {
-          path: '/changePassword',
-          name: 'changePassword',
-          component: () => import(/* webpackChunkName: "changePassword" */ '@/views/ChangePassword.vue')
-        }, {
+        //   path: 'dashboard',
+        //   name: 'dashboard',
+        //   component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
+        // }, {
+        //   path: 'formPage',
+        //   name: 'formPage',
+        //   component: () => import(/* webpackChunkName: "page" */ '@/views/FormPage.vue')
+        // }, {
+        //   path: 'datatablePage',
+        //   name: 'datatablePage',
+        //   component: () => import(/* webpackChunkName: "page" */ '@/views/DatatablePage.vue')
+        // }, {
+        //   path: 'buttonListPage',
+        //   name: 'buttonListPage',
+        //   component: () => import(/* webpackChunkName: "page" */ '@/views/ButtonListPage.vue')
+        // }, {
+        //   path: '/changePassword',
+        //   name: 'changePassword',
+        //   component: () => import(/* webpackChunkName: "changePassword" */ '@/views/ChangePassword.vue')
+        // }, {
           path: '/hospital',
           name: 'hospital',
           component: () => import(/* webpackChunkName: "hospital" */ '@/views/Hospital.vue')
