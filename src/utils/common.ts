@@ -2,7 +2,7 @@
  * @Author: 黄丰瑞 <huangfengrui@hqyatu.com>
  * @Date: 2019-08-02 16:00:10
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 13:59:07
+ * @LastEditTime : 2020-01-15 16:58:27
  * @Description: 通用的方法
  */
 
@@ -133,7 +133,7 @@ class RouterAutomatic {
         const name = this.handleToLowerCaseName(componentName)
         res.push({
           routerViewName: componentName,
-          name: `${originName}${parentsName}${componentName}`,
+          name: `${originName || ''}${parentsName}${componentName}`,
           path: name,
           component: context(key).default
         })

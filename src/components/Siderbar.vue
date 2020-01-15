@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 18:06:47
+ * @LastEditTime : 2020-01-15 17:18:51
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -59,7 +59,15 @@ export default class Siderbar extends Vue {
   }
 
   public get defaultActive () : string {
-    return '1-1'
+    const currentRoute = this.$route.matched
+    const index = this.menuList.findIndex((item:any) => currentRoute[1].path === item.url)
+    const currentMenu:any = this.menuList[index]
+    if (currentMenu.submenu) {
+      const subIndex = currentMenu.submenu.findIndex((item:any) => currentRoute[2].path === item.url)
+      return `${index}-${subIndex}`
+    } else {
+      return `1-${index}`
+    }
   }
 }
 </script>
