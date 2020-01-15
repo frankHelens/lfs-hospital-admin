@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 14:54:37
+ * @LastEditTime : 2020-01-15 18:14:35
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -47,6 +47,8 @@ export default class SmartForm extends Vue {
   @Prop({ default: 'small' }) formSize!: string
   @Prop({ default: () => [] }) buttonList!: object[]
   @Prop({ default: false }) inline!: boolean
+  @Prop({ default: false }) isEnterSubmit!: boolean
+
   @Provide() formValues: object = this.values
 
   get formButtonList () {

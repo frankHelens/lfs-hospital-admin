@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-15 16:00:36
+ * @LastEditTime : 2020-01-15 18:14:44
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -10,21 +10,13 @@
   .login-box
     h1 医院后台管理系统
     SmartForm(
+      ref="form"
+      @keyup.enter.native="submit"
+      :isEnterSubmit="true"
+      formSize="medium"
       :columns="columns"
       :formList="formList"
       :buttonList="buttonList")
-  //- <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
-  //-   <h3 class="login-title">类风湿互助系统</h3>
-  //-   <el-form-item label="账号" prop="username">
-  //-     <el-input type="text" placeholder="请输入账号" v-model="form.username"/>
-  //-   </el-form-item>
-  //-   <el-form-item label="密码" prop="password">
-  //-     <el-input type="password" placeholder="请输入密码" v-model="form.password"/>
-  //-   </el-form-item>
-  //-   <el-form-item>
-  //-     <el-button type="primary" v-on:click="onSubmit('loginForm')">登录</el-button>
-  //-   </el-form-item>
-  //- </el-form>
 
 </template>
 
@@ -39,6 +31,10 @@ import { storage } from '@/utils/common'
   }
 })
 export default class Login extends Vue {
+  public $refs!: {
+    form: SmartForm
+  }
+
   @Provide() columns: object = {
     username: {
       label: '账号',
@@ -59,17 +55,25 @@ export default class Login extends Vue {
   @Provide() buttonList: object[] = [{
     label: '登录',
     validate: true,
-    func: async ({ button, data }: any) => {
-      const { token, name } = await this.$systemApi.login(data)
-      storage.set('token', token || '')
-      storage.set('name', name || '')
-      this.$message({
-        type: 'success',
-        message: '登录成功'
-      })
-      button.$router.push('/')
+    type: 'primary',
+    size: 'medium',
+    func: ({ button, data }: any) => {
+      this.login(data)
     }
   }]
+  async login (data:any) {
+    const { token, name } = await this.$systemApi.login(data)
+    storage.set('token', token || '')
+    storage.set('name', name || '')
+    this.$message({
+      type: 'success',
+      message: '登录成功'
+    })
+    this.$router.push('/')
+  }
+  submit () {
+    this.login(this.$refs.form.formValues)
+  }
 }
 
 </script>
@@ -90,6 +94,9 @@ export default class Login extends Vue {
     // -webkit-border-radius: 5px;
     // -moz-border-radius: 5px;
     // box-shadow: 0 0 25px #909399;
+    h1 {
+      margin-bottom: 30px;
+    }
   }
 
   .login-title {
