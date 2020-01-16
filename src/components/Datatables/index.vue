@@ -8,8 +8,11 @@
       .search-wrapper
         FilterBox(
           v-if="isFilter"
-          ref="filterBox")
+          ref="filterBox"
+          v-bind="filterProps"
+          v-model="filterFormValues")
         SmartForm(
+          ref="customFilterForm"
           v-if="hasRelation"
           :inline="true"
           :columns="columnsList"
@@ -83,6 +86,7 @@ interface DatatablesProps {
   createFormValues?: object
   updateFormValues?: object
   isFilter?: boolean
+  filterProps?: object
 }
 
 @Component({
@@ -98,7 +102,8 @@ interface DatatablesProps {
 
 export default class Datatables extends tsc<DatatablesProps> {
   public $refs!: {
-    filterBox: FilterBox
+    filterBox: FilterBox,
+    customFilterForm: SmartForm
   }
   // export default class Datatables extends Vue {
   @Prop({ default: '' }) label!: string
@@ -108,6 +113,7 @@ export default class Datatables extends tsc<DatatablesProps> {
   @Prop({ default: () => [] }) tableData!: object[]
   @Prop({ default: 100 }) operationWidth!: number
   @Prop({ default: false }) isFilter!: boolean
+  @Prop({ default: () => ({}) }) filterProps!: object
   @Prop({ default: () => [] }) tableList!: string[]
   @Prop({ default: () => [] }) filterList!: string[]
   @Prop({ default: () => [] }) createList!: string[]
@@ -124,12 +130,18 @@ export default class Datatables extends tsc<DatatablesProps> {
   @Provide() total: number = 0
   @Provide() loading: boolean = false
   @Provide() columnsList: any = {}
-  @Provide() filterValues: object = {}
+  @Provide() filterFormValues: object = {}
+  @Provide() customFilterValues: object = {}
   @Provide() filterButtonList: object[] = this.isFilter || this.filterList.length ? [{
     label: '搜索',
     type: 'primary',
     func: ({ data }: any) => {
-      this.onChangeFilter(data)
+      this.handleOnSearch(data)
+    }
+  }, {
+    label: '重置',
+    func: ({ data }: any) => {
+      this.handleOnReset(data)
     }
   }] : []
   @Provide() dialogWidth: string = '40%'
@@ -156,6 +168,21 @@ export default class Datatables extends tsc<DatatablesProps> {
   created () {
     this.getRelation()
     this.getData()
+  }
+
+  get filterValues (): object {
+    const { day = '', name = '', dateRange = [] }:any = this.isFilter ? this.filterFormValues : {}
+    const [startTime = '', endTime = ''] = dateRange || []
+    const filterData = this.isFilter ? {
+      name,
+      day,
+      startTime: startTime ? dayjs(startTime).format('YYYY-MM-DD') : '',
+      endTime: endTime ? dayjs(endTime).format('YYYY-MM-DD') : ''
+    } : {}
+    return {
+      ...this.customFilterValues,
+      ...filterData
+    }
   }
 
   get tableClientHeight (): number {
@@ -254,21 +281,19 @@ export default class Datatables extends tsc<DatatablesProps> {
     this.pageIndex = pageIndex
     this.getData()
   }
-  onChangeFilter (customData: any) {
-    const { day = '', name = '', dateRange = [] } = this.isFilter ? this.$refs.filterBox : {}
-    const [startTime = '', endTime = ''] = dateRange || []
-    const filterData = this.isFilter ? {
-      name,
-      day,
-      startTime: startTime ? dayjs(startTime).format('YYYY-MM-DD') : '',
-      endTime: endTime ? dayjs(endTime).format('YYYY-MM-DD') : ''
-    } : {}
-    this.filterValues = {
-      ...filterData,
-      ...customData
-    }
+  // 搜索按钮
+  handleOnSearch (data: any) {
+    this.customFilterValues = data
     this.getData()
   }
+  // 重置
+  handleOnReset (data: any) {
+    this.filterFormValues = {}
+    this.$refs.customFilterForm.formValues = {}
+    this.customFilterValues = {}
+    this.getData()
+  }
+
   onCreateSubmit ({ data, button }: any) {
     button.loading = true
     request({

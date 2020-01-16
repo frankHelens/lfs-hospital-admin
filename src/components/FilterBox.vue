@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-10 18:19:15
+ * @LastEditTime : 2020-01-16 16:57:55
  * @Author: huangfengrui
  * @Date: 2020-01-09 15:51:42
  * @Description: password
@@ -10,18 +10,18 @@
   .name
     el-input(
       size="small"
-      v-model="name"
+      v-model="currentValue.name"
       clearable
-      placeholder="名称/手机号码")
+      :placeholder="namePlaceholder")
   .day-range
     el-date-picker(
       size="small"
-      v-model="dateRange"
+      v-model="currentValue.dateRange"
       type="daterange")
   .day
     el-radio-group(
       size="small"
-      v-model="day")
+      v-model="currentValue.day")
       el-radio-button(label="1") 今天
       el-radio-button(label="2") 昨天
       el-radio-button(label="3") 最近3天
@@ -34,27 +34,17 @@ import { Vue, Component, Provide, Prop } from 'vue-property-decorator'
 
 @Component
 export default class FilterBox extends Vue {
-  @Provide() name:string = ''
-  @Provide() day:string = ''
-  @Provide() dateRange:string[] = []
-
-  updated () {
-    console.log(this.name)
-    console.log(this.day)
-    console.log(this.dateRange)
+  @Prop() value!: any
+  @Prop({ default: '名称/手机号码' }) namePlaceholder!: string
+  // @Provide() name:string = ''
+  // @Provide() day:string = ''
+  // @Provide() dateRange:string[] = []
+  get currentValue () {
+    return this.value
   }
-  // @Prop({ default: '' }) value!: string | number
-  // @Prop({ default: false }) disabled!: boolean
-  // @Prop({ default: false }) readonly!: boolean
-  // @Prop({ default: '' }) placeholder!: string
-  // @Prop({ default: () => [] }) options!: object[]
-
-  // get currentValue () {
-  //   return this.value
-  // }
-  // set currentValue (val: string | number) {
-  //   this.$emit('input', val)
-  // }
+  set currentValue (val: string | number) {
+    this.$emit('input', val)
+  }
 }
 </script>
 

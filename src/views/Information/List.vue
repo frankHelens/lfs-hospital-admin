@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-16 13:34:15
+ * @LastEditTime : 2020-01-16 17:00:45
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -8,6 +8,7 @@
 <template lang='pug'>
   Datatables(
     :isFilter="true"
+    :filter-props="{namePlaceholder: '标题/作者'}"
     :resource="resource"
     :columns="columns"
     :tableList="tableList"
