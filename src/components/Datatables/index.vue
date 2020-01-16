@@ -199,7 +199,7 @@ export default class Datatables extends tsc<DatatablesProps> {
       const res = await Promise.all(relationRequestList)
       const resData = res.reduce((res, item) => {
         res[item.name] = item.data.map((resItem:any) => ({
-          value: String(resItem.id),
+          value: resItem.id,
           label: resItem.name
         }))
         return res

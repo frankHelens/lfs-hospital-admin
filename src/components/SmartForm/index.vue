@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-15 18:14:35
+ * @LastEditTime : 2020-01-16 15:08:30
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -78,7 +78,7 @@ export default class SmartForm extends Vue {
     const columns: any = this.columns
     return Object.keys(columns).reduce((res:any, key:any) => {
       if (columns[key].form) {
-        const rules = columns[key].form.rules || {}
+        const rules = columns[key].form.rules || []
         res[key] = rules.required ? {
           message: '此选项必填',
           ...rules

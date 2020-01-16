@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-15 18:14:44
+ * @LastEditTime : 2020-01-16 14:42:12
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description:
@@ -104,4 +104,5 @@ export default class Login extends Vue {
     margin: 0 auto 40px auto;
     color: #303133;
   }
+
 </style>
