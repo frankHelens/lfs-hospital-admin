@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 17:34:02
+ * @LastEditTime : 2020-01-16 13:34:15
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -124,6 +124,10 @@ export default class List extends Vue {
     },
     imageUrl: {
       label: '文章封面',
+      align: 'center',
+      render: {
+        type: 'image'
+      },
       form: {
         type: 'upload',
         rules: {
@@ -134,8 +138,9 @@ export default class List extends Vue {
     isPush: {
       label: '是否推荐',
       align: 'center',
-      formatter: (row:object, column:object, val:string) => {
-        return commonDict.common[val]
+      render: {
+        type: 'select',
+        dict: commonDict.common
       },
       form: {
         type: 'switch',
@@ -153,8 +158,9 @@ export default class List extends Vue {
     state: {
       label: '状态',
       align: 'center',
-      formatter: (row:object, column:object, val:string) => {
-        return commonDict.publishState[val]
+      render: {
+        type: 'select',
+        dict: commonDict.publishState
       }
     },
     tags: {

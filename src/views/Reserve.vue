@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-13 15:34:02
+ * @LastEditTime : 2020-01-16 12:01:08
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -103,8 +103,9 @@ export default class Reserve extends Vue {
     state: {
       label: '就诊状态',
       align: 'center',
-      formatter: (row: any, columns: any, val: any) => {
-        return reserveDict.state[val]
+      render: {
+        type: 'select',
+        dict: reserveDict.state
       }
     }
   }

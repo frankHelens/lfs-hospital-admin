@@ -23,6 +23,20 @@
       :tableHeight="tableClientHeight"
       :operationList="operationList"
       :operationWidth="operationWidth")
+      template(slot-scope="{content, prop}" v-if="content.render")
+        el-table-column(
+          :fixed="content.fixed"
+          :align="content.align"
+          :min-width="content.width"
+          :label="content.label")
+          template(
+            slot-scope="{row, $index}")
+            InfoRender(
+              :name="prop"
+              :data="row[prop]"
+              :row="row"
+              :index="$index"
+              :render="content.render")
     .footer
       Pagination(
         :total="total"
@@ -47,6 +61,7 @@ import { Component as tsc } from 'vue-tsx-support'
 import ButtonList from '@/components/ButtonList/index.vue'
 import Datatable from './Datatable.vue'
 import Pagination from './Pagination.vue'
+import InfoRender from './InfoRender.vue'
 import SmartForm from '@/components/SmartForm/index.vue'
 import FilterBox from '@/components/FilterBox.vue'
 import dayjs from 'dayjs'
@@ -76,7 +91,8 @@ interface DatatablesProps {
     Datatable,
     SmartForm,
     Pagination,
-    FilterBox
+    FilterBox,
+    InfoRender
   }
 })
 
@@ -170,7 +186,6 @@ export default class Datatables extends tsc<DatatablesProps> {
     }))
   }
   async getRelation () {
-    console.log(this.isFilter)
     const relation = this.getRelationList(this.columns)
     if (relation.length) {
       const relationRequestList = relation.map((name) => {

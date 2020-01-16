@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 18:10:53
+ * @LastEditTime : 2020-01-16 12:01:36
  * @Author: huangfengrui
  * @Date: 2020-01-09 17:55:41
  * @Description:
@@ -22,7 +22,7 @@ import { Vue, Component, Provide } from 'vue-property-decorator'
 import { toolbarCreate } from '@/utils/buttons/toolbar'
 import { operationUpdate, operationDelete } from '@/utils/buttons/operation'
 import Datatables from '@/components/Datatables/index.vue'
-import { bannerDict } from '@/utils/relation'
+import { commonDict } from '@/utils/relation'
 
 @Component({
   components: {
@@ -100,7 +100,11 @@ export default class Banner extends Vue {
       }
     },
     imageUrl: {
-      label: '图片地址',
+      label: '图片',
+      align: 'center',
+      render: {
+        type: 'image'
+      },
       form: {
         type: 'upload',
         rules: {
@@ -113,6 +117,7 @@ export default class Banner extends Vue {
     },
     sort: {
       label: '排序值',
+      align: 'center',
       form: {
         type: 'number',
         rules: {
@@ -123,15 +128,18 @@ export default class Banner extends Vue {
     state: {
       label: '状态',
       align: 'center',
-      formatter: (row:object, column:object, val:string) => {
-        return bannerDict.state[val]
+      render: {
+        type: 'select',
+        dict: commonDict.publishState
       },
       form: {
         type: 'select',
-        options: Object.entries(bannerDict.state).map(item => ({
-          value: item[0],
-          label: item[1]
-        }))
+        options: Object.entries(commonDict.publishState).map((item:any) => {
+          return {
+            value: item[0],
+            label: item[1]['label']
+          }
+        })
       }
     },
     stopTime: {

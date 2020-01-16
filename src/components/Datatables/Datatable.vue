@@ -1,6 +1,6 @@
 <!--
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-14 15:18:46
+ * @LastEditTime : 2020-01-16 10:14:28
  * @Author: huangfengrui
  * @Date: 2020-01-09 11:06:30
  * @Description: Datatable
@@ -16,18 +16,22 @@ el-table.table(
   :data="currentTableData"
   :height="tableClientHeight")
   el-table-column(type="index" width="50" label="序号")
-  el-table-column(
-    v-for="(key, i) in tableList"
+  template(
     v-if="Object.keys(columns).length"
-    :key="key"
-    :prop="key"
-    :column-key="key"
-    :label="columns[key].label"
-    :fixed="columns[key].fixed"
-    :align="columns[key].align"
-    :min-width="columns[key].width"
-    :formatter="columns[key].formatter"
-    :show-overflow-tooltip="true")
+    v-for="(key, i) in tableList")
+    slot(
+      :prop="key"
+      :content="columns[key]")
+      el-table-column(
+        :key="key"
+        :column-key="key"
+        :prop="key"
+        :label="columns[key].label"
+        :fixed="columns[key].fixed"
+        :align="columns[key].align"
+        :min-width="columns[key].width"
+        :formatter="columns[key].formatter"
+        :show-overflow-tooltip="true")
   el-table-column(
     v-if="Object.keys(columns).length && hasOperation"
     :label="operationOption.label"

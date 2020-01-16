@@ -2,7 +2,7 @@
  * @Author: 黄丰瑞 <huangfengrui@hqyatu.com>
  * @Date: 2019-08-02 16:00:10
  * @LastEditors  : huangfengrui
- * @LastEditTime : 2020-01-15 16:58:27
+ * @LastEditTime : 2020-01-16 11:22:04
  * @Description: 通用的方法
  */
 
@@ -176,3 +176,11 @@ export const storage = {
  * @return {object} 深拷贝后的对象
  */
 export const cloneDeep = (val:object = {}) => JSON.parse(JSON.stringify(val))
+
+/**
+ * @description: 是否为对象
+ * @param {any} o 目标
+ * @return {boolean} 是否为对象
+ */
+export const isObject = (o:any) =>
+  Object.prototype.toString.call(o).slice(8, -1) === 'Object'
