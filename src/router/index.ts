@@ -11,18 +11,18 @@ import Home from '@/views/Home.vue'
 
 Vue.use(Router)
 
-const routerContext = require.context('./', true, /\.ts$/)
-const routes = routerContext.keys().reduce((resRoute: any, route: any) => {
-  // 如果是根目录，不处理
-  if (!route.startsWith('./index.ts')) {
-    const routerModule = routerContext(route)
-    resRoute.push({
-      // beforeEnter: routerBeforeEnter,
-      ...routerModule.default
-    })
-  }
-  return resRoute
-}, [])
+// const routerContext = require.context('./', true, /\.ts$/)
+// const routes = routerContext.keys().reduce((resRoute: any, route: any) => {
+//   // 如果是根目录，不处理
+//   if (!route.startsWith('./index.ts')) {
+//     const routerModule = routerContext(route)
+//     resRoute.push({
+//       // beforeEnter: routerBeforeEnter,
+//       ...routerModule.default
+//     })
+//   }
+//   return resRoute
+// }, [])
 
 export default new Router({
   routes: [
@@ -32,28 +32,25 @@ export default new Router({
       component: Home,
       redirect: '/banner',
       children: [
-        ...routes,
+        // ...routes,
         {
-        //   path: 'dashboard',
-        //   name: 'dashboard',
-        //   component: () => import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
-        // }, {
-        //   path: 'formPage',
-        //   name: 'formPage',
-        //   component: () => import(/* webpackChunkName: "page" */ '@/views/FormPage.vue')
-        // }, {
-        //   path: 'datatablePage',
-        //   name: 'datatablePage',
-        //   component: () => import(/* webpackChunkName: "page" */ '@/views/DatatablePage.vue')
-        // }, {
-        //   path: 'buttonListPage',
-        //   name: 'buttonListPage',
-        //   component: () => import(/* webpackChunkName: "page" */ '@/views/ButtonListPage.vue')
-        // }, {
-        //   path: '/changePassword',
-        //   name: 'changePassword',
-        //   component: () => import(/* webpackChunkName: "changePassword" */ '@/views/ChangePassword.vue')
-        // }, {
+          path: '/information',
+          name: 'information',
+          component: () => import(/* webpackChunkName: "information" */ '@/views/Information/index.vue'),
+          children: [
+            {
+              path: 'classify',
+              name: 'classify',
+              component: () => import(/* webpackChunkName: "information" */ '@/views/Information/Classify.vue')
+            },
+            {
+              path: 'list',
+              name: 'list',
+              component: () => import(/* webpackChunkName: "information" */ '@/views/Information/List.vue')
+            }
+          ]
+        },
+        {
           path: '/hospital',
           name: 'hospital',
           component: () => import(/* webpackChunkName: "hospital" */ '@/views/Hospital.vue')
