@@ -190,8 +190,8 @@ export default class List extends Vue {
           required: true,
           message: '此选项必填'
         }, {
-          max: 50,
-          message: '不可超过50个字'
+          max: 150,
+          message: '不可超过150个字'
         }]
       }
     }
