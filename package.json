@@ -13,7 +13,7 @@
     "dayjs": "^1.8.15",
     "echarts": "^4.2.1",
     "element-ui": "^2.10.1",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "style-resources-loader": "^1.2.1",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
